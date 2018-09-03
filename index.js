@@ -3,7 +3,7 @@
 const EventEmitter = require('events').EventEmitter;
 const async = require('async');
 const auto = require('auto-bind');
-const AWS = require('aws-sdk');
+const SQS = require('aws-sdk/clients/sqs');
 const debug = require('debug')('sqs-consumer');
 const requiredOptions = [
   'queueUrl',
@@ -49,7 +49,7 @@ class Consumer extends EventEmitter {
     this.waitTimeSeconds = options.waitTimeSeconds || 20;
     this.authenticationErrorTimeout = options.authenticationErrorTimeout || 10000;
 
-    this.sqs = options.sqs || new AWS.SQS({
+    this.sqs = options.sqs || new SQS({
       region: options.region || process.env.AWS_REGION || 'eu-west-1'
     });
 
